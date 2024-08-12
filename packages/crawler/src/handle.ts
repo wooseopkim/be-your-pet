@@ -18,23 +18,29 @@ export default async function handle(request?: Request) {
 	const contentType = headers.get('Content-Type') ?? '';
 
 	if (!jsonContentTypeHeader.test(contentType)) {
-		console.error('wrong content type', {
-			status,
-			headers,
-			contentType,
-			text: await animalListResponse.text(),
-		});
+		console.error(
+			'wrong content type',
+			JSON.stringify({
+				status,
+				headers,
+				contentType,
+				text: await animalListResponse.text(),
+			})
+		);
 		throw new CustomError('Expected JSON but got non-JSON response');
 	}
 
 	const animalListBody: PublicApiResponse = await animalListResponse.json();
 
 	if (!ok || animalListBody.response.header.resultCode !== '00') {
-		console.error('abnormal response', {
-			status,
-			headers,
-			request,
-		});
+		console.error(
+			'abnormal response',
+			JSON.stringify({
+				status,
+				headers,
+				request,
+			})
+		);
 		throw new CustomError('Expected success but got abnormal response');
 	}
 
@@ -47,18 +53,25 @@ export default async function handle(request?: Request) {
 	const supabase = createClient(supabaseUrl, supabaseKey);
 
 	if (apiList === undefined || apiList.length === 0) {
-		console.warn('end of list', {
-			status,
-			headers,
-			request,
-			animalListBody,
-		});
+		console.warn(
+			'end of list',
+			JSON.stringify({
+				status,
+				headers,
+				request,
+				animalListBody,
+			})
+		);
 		return undefined;
 	}
 
-	const records = apiList.map((x) => ({
-		body: x,
-	}));
+	const records = apiList
+		.map((x) => ({
+			body: x,
+		}))
+		.filter(({ body: { desertionNo } }, index, array) => {
+			return array.findIndex((x) => x.body.desertionNo === desertionNo) === index;
+		});
 
 	const result = await supabase.rpc(
 		'upsert_animals',
@@ -70,23 +83,29 @@ export default async function handle(request?: Request) {
 	const { count: upsertedCount, error } = result;
 
 	if (error != null) {
-		console.error('error inserting data', {
-			error,
-			records,
-			upsertedCount,
-		});
+		console.error(
+			'error inserting data',
+			JSON.stringify({
+				error,
+				records,
+				upsertedCount,
+			})
+		);
 		throw new CustomError('Error inserting data into DB');
 	}
 
-	console.debug('successful response', {
-		status,
-		headers,
-		request,
-		animalListBody,
-		apiCount,
-		totalCount,
-		upsertedCount,
-	});
+	console.debug(
+		'successful response',
+		JSON.stringify({
+			status,
+			headers,
+			request,
+			animalListBody,
+			apiCount,
+			totalCount,
+			upsertedCount,
+		})
+	);
 	return {
 		next: paginator.next(),
 		totalCount,
