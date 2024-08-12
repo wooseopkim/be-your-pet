@@ -9,29 +9,14 @@
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-import-resolver-typescript": "^3.5.5",
 		"eslint-plugin-import": "^2.27.5",
-		"husky": "^8.0.3",
-		"lint-staged": "^15.2.2",
 		"modern-normalize": "^2.0.0",
 		"prettier": "2.8.8",
 		"supabase": "^1.167.4",
 		"typescript": "^5.0.4"
 	},
-	"scripts": {
-		"prepare": "npx husky install"
-	},
 	"workspaces": [
 		"packages/*"
 	],
-	"lint-staged": {
-		"packages/web/**/*.{js,jsx,ts,tsx,svelte}": [
-			"npm run check --workspace=web",
-			"npm run format --workspace=web"
-		],
-		"packages/crawler/**/*.{js,jsx,ts,tsx,svelte}": [
-			"npm run check --workspace=crawler",
-			"npm run format --workspace=crawler"
-		]
-	},
 	"volta": {
 		"node": "20.13.1"
 	}
