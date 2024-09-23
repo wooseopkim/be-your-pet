@@ -9,7 +9,7 @@
 
 	function onChange(e: KeyboardEvent) {
 		const target = e.target as HTMLInputElement | null;
-		dispatch('search', target?.value ?? undefined);
+		dispatch('search', target?.value ?? '');
 	}
 </script>
 
