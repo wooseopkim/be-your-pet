@@ -14,7 +14,7 @@
 	{#if showExtras}
 		<section class="extras">
 			<Location {data} />
-			<div class="extra-spacer" />
+			<div class="extra-spacer"></div>
 			<Contacts {data} />
 		</section>
 	{/if}

@@ -1,5 +1,5 @@
 import type { PostgrestFilterBuilder } from '@supabase/postgrest-js';
-import type { GenericSchema } from '@supabase/postgrest-js/dist/module/types';
+import type { GenericSchema } from '@supabase/supabase-js/dist/module/lib/types';
 import type { AnimalRecord } from './AnimalRecord';
 import supabase from './client';
 

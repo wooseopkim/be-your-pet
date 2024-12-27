@@ -2,7 +2,9 @@
 	font-family: 'Nanum Square Neo';
 	font-weight: 300;
 	font-display: swap;
-	src: local('NanumSquare Neo Light'), url('./NanumSquareNeoTTF-aLt.woff2') format('woff2'),
+	src:
+		local('NanumSquare Neo Light'),
+		url('./NanumSquareNeoTTF-aLt.woff2') format('woff2'),
 		url('./NanumSquareNeoTTF-aLt.woff') format('woff'),
 		url('./NanumSquareNeoTTF-aLt.ttf') format('truetype');
 }
@@ -11,7 +13,9 @@
 	font-family: 'Nanum Square Neo';
 	font-weight: 400;
 	font-display: swap;
-	src: local('NanumSquare Neo Regular'), url('./NanumSquareNeoTTF-bRg.woff2') format('woff2'),
+	src:
+		local('NanumSquare Neo Regular'),
+		url('./NanumSquareNeoTTF-bRg.woff2') format('woff2'),
 		url('./NanumSquareNeoTTF-bRg.woff') format('woff'),
 		url('./NanumSquareNeoTTF-bRg.ttf') format('truetype');
 }
@@ -20,7 +24,9 @@
 	font-family: 'Nanum Square Neo';
 	font-weight: 700;
 	font-display: swap;
-	src: local('NanumSquare Neo Bold'), url('./NanumSquareNeoTTF-cBd.woff2') format('woff2'),
+	src:
+		local('NanumSquare Neo Bold'),
+		url('./NanumSquareNeoTTF-cBd.woff2') format('woff2'),
 		url('./NanumSquareNeoTTF-cBd.woff') format('woff'),
 		url('./NanumSquareNeoTTF-cBd.ttf') format('truetype');
 }
@@ -29,7 +35,9 @@
 	font-family: 'Nanum Square Neo';
 	font-weight: 800;
 	font-display: swap;
-	src: local('NanumSquare Neo ExtraBold'), url('./NanumSquareNeoTTF-dEb.woff2') format('woff2'),
+	src:
+		local('NanumSquare Neo ExtraBold'),
+		url('./NanumSquareNeoTTF-dEb.woff2') format('woff2'),
 		url('./NanumSquareNeoTTF-dEb.woff') format('woff'),
 		url('./NanumSquareNeoTTF-dEb.ttf') format('truetype');
 }
@@ -38,7 +46,9 @@
 	font-family: 'Nanum Square Neo';
 	font-weight: 900;
 	font-display: swap;
-	src: local('NanumSquare Neo Heavy'), url('./NanumSquareNeoTTF-eHv.woff2') format('woff2'),
+	src:
+		local('NanumSquare Neo Heavy'),
+		url('./NanumSquareNeoTTF-eHv.woff2') format('woff2'),
 		url('./NanumSquareNeoTTF-eHv.woff') format('woff'),
 		url('./NanumSquareNeoTTF-eHv.ttf') format('truetype');
 }

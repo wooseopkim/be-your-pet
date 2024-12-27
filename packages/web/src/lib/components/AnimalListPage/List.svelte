@@ -23,7 +23,7 @@
 	{#key body.desertionNo}
 		{#if i === content.length - 2}
 			<Item data={item} />
-			<div bind:this={lastElement} />
+			<div bind:this={lastElement}></div>
 		{:else}
 			<Item data={item} />
 		{/if}
