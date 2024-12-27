@@ -1,6 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import postcssPresetEnv from 'postcss-preset-env';
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [sveltekit()],
@@ -8,8 +8,5 @@ export default defineConfig({
 		postcss: {
 			plugins: [postcssPresetEnv()],
 		},
-	},
-	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}'],
 	},
 });
