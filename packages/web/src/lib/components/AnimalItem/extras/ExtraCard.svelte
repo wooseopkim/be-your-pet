@@ -81,7 +81,7 @@
 	}
 </script>
 
-<div bind:this={el} />
+<div bind:this={el}></div>
 <section style:background-color={backgroundColor} style:transform>
 	<slot />
 </section>

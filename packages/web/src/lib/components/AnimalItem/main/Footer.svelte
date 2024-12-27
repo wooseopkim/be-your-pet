@@ -5,7 +5,7 @@
 </script>
 
 <footer class="cursive" class:terminated={data.terminated}>
-	<span style:background-color={data.primaryColor} />
+	<span style:background-color={data.primaryColor}></span>
 	{data.source.specialMark}<br />
 	{data.source.noticeComment ?? ''}
 </footer>
