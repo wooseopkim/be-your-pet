@@ -1,28 +1,14 @@
-import { setFailed } from '@actions/core';
-import { getNumberEnv } from './src/env';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import handle, { type Request } from './src/handle';
 
-const page = getNumberEnv('page');
-const size = getNumberEnv('size');
-crawl({ page, size }).catch(onError);
-
-async function crawl(request?: Request) {
-	const result = await handle(request);
+export default async function crawl(supabase: SupabaseClient, request?: Request) {
+	const result = await handle(supabase, request);
 	if (result === undefined) {
 		return;
 	}
-	await crawl({
+	await crawl(supabase, {
 		page: result.next.page,
 		size: result.next.size,
 		totalCount: result.totalCount,
 	});
-}
-
-function onError(e: unknown) {
-	if (e instanceof Error) {
-		setFailed(e);
-		return;
-	}
-	console.error('Unknown error occured:', e);
-	setFailed('Unknown error');
 }

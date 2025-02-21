@@ -1,18 +1,22 @@
-import { createClient } from '@supabase/supabase-js';
+import { SupabaseClient } from '@supabase/supabase-js';
 import { CustomError } from './CustomError';
 import { Paginator } from './Paginator';
-import { supabaseKey, supabaseUrl } from './env';
-import { fetchAnimalList, type PublicApiResponse } from './public-api';
+import { fetchAnimalList, type OpenApiResponse } from './public-api';
 
 const jsonContentTypeHeader = /^application\/json(;.+)?/;
 
 export type Request = Partial<Paginator> & {
 	totalCount?: number;
+	open_api_service_key?: string;
 };
 
-export default async function handle(request?: Request) {
+export default async function handle(supabase: SupabaseClient, request?: Request) {
 	const paginator = new Paginator(request);
-	const animalListResponse = await fetchAnimalList(paginator);
+	const openApiServiceKey = request?.open_api_service_key;
+	if (openApiServiceKey == undefined) {
+		throw new CustomError('API key not provided');
+	}
+	const animalListResponse = await fetchAnimalList(openApiServiceKey, paginator);
 	const { status, headers, ok } = animalListResponse;
 
 	const contentType = headers.get('Content-Type') ?? '';
@@ -30,7 +34,7 @@ export default async function handle(request?: Request) {
 		throw new CustomError('Expected JSON but got non-JSON response');
 	}
 
-	const animalListBody: PublicApiResponse = await animalListResponse.json();
+	const animalListBody: OpenApiResponse = await animalListResponse.json();
 
 	if (!ok || animalListBody.response.header.resultCode !== '00') {
 		console.error(
@@ -49,8 +53,6 @@ export default async function handle(request?: Request) {
 	const apiCount =
 		'body' in animalListBody.response ? animalListBody.response.body.totalCount : (0 as never);
 	const totalCount = request?.totalCount ?? apiCount;
-
-	const supabase = createClient(supabaseUrl, supabaseKey);
 
 	if (apiList === undefined || apiList.length === 0) {
 		console.warn(

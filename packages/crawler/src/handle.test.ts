@@ -1,27 +1,30 @@
-import { createClient, type PostgrestError } from '@supabase/supabase-js';
+import { PostgrestError, SupabaseClient } from '@supabase/supabase-js';
 import sampleResponse from '../tests/sample-response.json';
-import silent from '../tests/silent';
 import handle from './handle';
-
-const originalHandle = handle;
 
 jest.mock('@supabase/supabase-js');
 
 describe(handle, () => {
+	let supabase: SupabaseClient;
+
 	beforeEach(() => {
+		supabase = {
+			rpc: () =>
+				Promise.resolve({
+					count: 20,
+					error: null,
+				}),
+		} as unknown as SupabaseClient;
 		mockFetch(JSON.stringify(sampleResponse));
-		mockSupabase(20, null);
 	});
 
 	afterEach(() => {
 		jest.restoreAllMocks();
 	});
 
-	const handle = silent(originalHandle);
-
 	describe('calling public API', () => {
 		it('passes default page parameters', async () => {
-			await handle();
+			await handle(supabase, { open_api_service_key: 'foobar' });
 
 			expect(fetch).toHaveBeenCalledTimes(1);
 			const url = (fetch as jest.Mock).mock.lastCall?.[0] as URL;
@@ -30,7 +33,8 @@ describe(handle, () => {
 		});
 
 		it('passes given parameters', async () => {
-			await handle({
+			await handle(supabase, {
+				open_api_service_key: 'foobar',
 				page: 12,
 				size: 34,
 			});
@@ -42,7 +46,8 @@ describe(handle, () => {
 		});
 
 		it('limits size maximum', async () => {
-			await handle({
+			await handle(supabase, {
+				open_api_service_key: 'foobar',
 				size: 20230513,
 			});
 
@@ -60,7 +65,9 @@ describe(handle, () => {
 				},
 			});
 
-			const promise = handle();
+			const promise = handle(supabase, {
+				open_api_service_key: 'foobar',
+			});
 
 			await expect(promise).rejects.toHaveProperty(
 				'message',
@@ -76,7 +83,9 @@ describe(handle, () => {
 				},
 			});
 
-			const promise = handle();
+			const promise = handle(supabase, {
+				open_api_service_key: 'foobar',
+			});
 
 			await expect(promise).rejects.toHaveProperty(
 				'message',
@@ -98,7 +107,9 @@ describe(handle, () => {
 				})
 			);
 
-			const promise = handle();
+			const promise = handle(supabase, {
+				open_api_service_key: 'foobar',
+			});
 
 			await expect(promise).rejects.toHaveProperty(
 				'message',
@@ -109,7 +120,9 @@ describe(handle, () => {
 
 	describe('handling Supabase response', () => {
 		it('returns paginator for next page', async () => {
-			const result = await handle();
+			const result = await handle(supabase, {
+				open_api_service_key: 'foobar',
+			});
 
 			expect(result?.next).toEqual({
 				page: 2,
@@ -131,15 +144,25 @@ describe(handle, () => {
 				})
 			);
 
-			const result = await handle();
+			const result = await handle(supabase, {
+				open_api_service_key: 'foobar',
+			});
 
 			expect(result).toBeUndefined();
 		});
 
 		it('fails when db error occurs', async () => {
-			mockSupabase(null, {} as PostgrestError);
+			supabase = {
+				rpc: () =>
+					Promise.resolve({
+						count: null,
+						error: {} as PostgrestError,
+					}),
+			} as unknown as SupabaseClient;
 
-			const promise = handle();
+			const promise = handle(supabase, {
+				open_api_service_key: 'foobar',
+			});
 
 			await expect(promise).rejects.toHaveProperty('message', 'Error inserting data into DB');
 		});
@@ -157,14 +180,4 @@ function mockFetch(
 	jest.spyOn(global, 'fetch').mockImplementation(() => {
 		return Promise.resolve(new Response(body, init));
 	});
-}
-
-function mockSupabase(count: number | null, error: PostgrestError | null) {
-	(createClient as jest.Mock).mockImplementation(() => ({
-		rpc: () =>
-			Promise.resolve({
-				count,
-				error,
-			}),
-	}));
 }
