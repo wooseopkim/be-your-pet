@@ -4,7 +4,7 @@ in
 with pkgs;
 mkShell {
   packages = [
-    nodejs
+    bun
     deno
     playwright-driver.browsers
     nil
