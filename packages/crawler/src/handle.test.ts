@@ -1,8 +1,8 @@
-import { PostgrestError, SupabaseClient } from '@supabase/supabase-js';
+import { type PostgrestError, SupabaseClient } from '@supabase/supabase-js';
 import sampleResponse from '../tests/sample-response.json';
 import handle from './handle';
-
-jest.mock('@supabase/supabase-js');
+import { mock, type Mock } from 'node:test';
+import assert from 'node:assert';
 
 describe(handle, () => {
 	let supabase: SupabaseClient;
@@ -19,17 +19,19 @@ describe(handle, () => {
 	});
 
 	afterEach(() => {
-		jest.restoreAllMocks();
+		mock.restoreAll();
 	});
 
 	describe('calling public API', () => {
 		it('passes default page parameters', async () => {
 			await handle(supabase, { open_api_service_key: 'foobar' });
 
-			expect(fetch).toHaveBeenCalledTimes(1);
-			const url = (fetch as jest.Mock).mock.lastCall?.[0] as URL;
-			expect(url.searchParams.get('pageNo')).toBe('1');
-			expect(url.searchParams.get('numOfRows')).toBe('100');
+			const { calls } = (fetch as Mock<typeof fetch>).mock;
+			assert.equal(1, calls.length);
+			const url = calls[calls.length - 1].arguments[0];
+			assert.ok(url instanceof URL);
+			assert.equal(url.searchParams.get('pageNo'), '1');
+			assert.equal(url.searchParams.get('numOfRows'), '100');
 		});
 
 		it('passes given parameters', async () => {
@@ -39,10 +41,12 @@ describe(handle, () => {
 				size: 34,
 			});
 
-			expect(fetch).toHaveBeenCalledTimes(1);
-			const url = (fetch as jest.Mock).mock.lastCall?.[0] as URL;
-			expect(url.searchParams.get('pageNo')).toBe('12');
-			expect(url.searchParams.get('numOfRows')).toBe('34');
+			const { calls } = (fetch as Mock<typeof fetch>).mock;
+			assert.equal(1, calls.length);
+			const url = calls[calls.length - 1].arguments[0];
+			assert.ok(url instanceof URL);
+			assert.equal(url.searchParams.get('pageNo'), '12');
+			assert.equal(url.searchParams.get('numOfRows'), '34');
 		});
 
 		it('limits size maximum', async () => {
@@ -51,9 +55,11 @@ describe(handle, () => {
 				size: 20230513,
 			});
 
-			expect(fetch).toHaveBeenCalledTimes(1);
-			const url = (fetch as jest.Mock).mock.lastCall?.[0] as URL;
-			expect(url.searchParams.get('numOfRows')).toBe('1000');
+			const { calls } = (fetch as Mock<typeof fetch>).mock;
+			assert.equal(1, calls.length);
+			const url = calls[calls.length - 1].arguments[0];
+			assert.ok(url instanceof URL);
+			assert.equal(url.searchParams.get('numOfRows'), '1000');
 		});
 	});
 
@@ -69,10 +75,10 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			await expect(promise).rejects.toHaveProperty(
-				'message',
-				'Expected JSON but got non-JSON response'
-			);
+			await assert.rejects(promise, (err) => {
+				assert.ok(err instanceof Object && 'message' in err);
+				assert.equal(err.message, 'Expected JSON but got non-JSON response');
+			});
 		});
 
 		it('fails on bad response', async () => {
@@ -87,10 +93,10 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			await expect(promise).rejects.toHaveProperty(
-				'message',
-				'Expected success but got abnormal response'
-			);
+			await assert.rejects(promise, (err) => {
+				assert.ok(err instanceof Object && 'message' in err);
+				assert.equal(err.message, 'Expected success but got abnormal response');
+			});
 		});
 
 		it('fails on bad result code', async () => {
@@ -111,10 +117,10 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			await expect(promise).rejects.toHaveProperty(
-				'message',
-				'Expected success but got abnormal response'
-			);
+			await assert.rejects(promise, (err) => {
+				assert.ok(err instanceof Object && 'message' in err);
+				assert.equal(err.message, 'Expected success but got abnormal response');
+			});
 		});
 	});
 
@@ -124,7 +130,7 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			expect(result?.next).toEqual({
+			assert.deepStrictEqual(result?.next, {
 				page: 2,
 				size: 100,
 			});
@@ -148,7 +154,7 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			expect(result).toBeUndefined();
+			assert.strictEqual(result, undefined);
 		});
 
 		it('fails when db error occurs', async () => {
@@ -164,7 +170,10 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			await expect(promise).rejects.toHaveProperty('message', 'Error inserting data into DB');
+			await assert.rejects(promise, (err) => {
+				assert.ok(err instanceof Object && 'message' in err);
+				assert.equal(err.message, 'Error inserting data into DB');
+			});
 		});
 	});
 });

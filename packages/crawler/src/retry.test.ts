@@ -1,14 +1,18 @@
+import { mock, type Mock } from 'node:test';
 import retry from './retry';
+import assert from 'node:assert';
 
 describe(retry, () => {
 	beforeEach(() => {
-		jest.useFakeTimers();
-		jest.spyOn(global, 'setTimeout');
+		mock.timers.enable();
+		mock.method(globalThis, 'setTimeout')
+			.mock
+			.mockImplementation(setTimeout);
 	});
 
 	afterEach(() => {
-		jest.useRealTimers();
-		jest.clearAllMocks();
+		mock.timers.reset();
+		mock.restoreAll();
 	});
 
 	it('does not retry on success', async () => {
@@ -20,8 +24,7 @@ describe(retry, () => {
 
 		const p = retry(target, generate);
 
-		await expect(p).resolves.toBeUndefined();
-		expect(setTimeout).not.toHaveBeenCalled();
+		assert.strictEqual(await p, undefined);
 	});
 
 	it('does not retry on immediate abort', async () => {
@@ -33,8 +36,7 @@ describe(retry, () => {
 
 		const p = retry(target, generate);
 
-		await expect(p).rejects.toBeUndefined();
-		expect(setTimeout).not.toHaveBeenCalled();
+		assert.strictEqual(await p, undefined);
 	});
 
 	it('triggers again on failures', async () => {
@@ -47,13 +49,15 @@ describe(retry, () => {
 		};
 
 		const p = retry(target, generate);
-		jest.advanceTimersByTimeAsync(100_000);
+		mock.timers.tick(100_000);
 
-		await expect(p).rejects.toBeUndefined();
-		expect(setTimeout).toHaveBeenCalledTimes(3);
-		expect(setTimeout).toHaveBeenNthCalledWith(1, expect.any(Function), 1000);
-		expect(setTimeout).toHaveBeenNthCalledWith(2, expect.any(Function), 2000);
-		expect(setTimeout).toHaveBeenNthCalledWith(3, expect.any(Function), 3000);
+		assert.rejects(p);
+		const { calls } = (setTimeout as Mock<typeof setTimeout>).mock;
+		assert.equal(calls.map((x) => x.arguments.slice(1)), [
+			1000,
+			2000,
+			3000,
+		]);
 	});
 
 	it('resolves when retry is successful', async () => {
@@ -75,12 +79,14 @@ describe(retry, () => {
 		};
 
 		const p = retry(target, generate);
-		jest.advanceTimersByTimeAsync(100_000);
+		mock.timers.tick(100_000);
 
-		await expect(p).resolves.toBeUndefined();
-		expect(setTimeout).toHaveBeenCalledTimes(3);
-		expect(setTimeout).toHaveBeenNthCalledWith(1, expect.any(Function), 1000);
-		expect(setTimeout).toHaveBeenNthCalledWith(2, expect.any(Function), 2000);
-		expect(setTimeout).toHaveBeenNthCalledWith(3, expect.any(Function), 3000);
+		assert.strictEqual(await p, undefined);
+		const { calls } = (setTimeout as Mock<typeof setTimeout>).mock;
+		assert.equal(calls.map((x) => x.arguments.slice(1)), [
+			1000,
+			2000,
+			3000,
+		]);
 	});
 });
