@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "format": "biome format",
-    "lint": "biome lint"
+    "lint": "biome lint",
+    "ws": "bun --filter='*' --elide-lines=0 run"
   },
   "version": "0.0.1",
   "workspaces": ["packages/*"],
