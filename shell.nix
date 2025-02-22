@@ -16,4 +16,9 @@ mkShell {
 
   PLAYWRIGHT_BROWSERS_PATH = playwright-driver.browsers;
   PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = true;
+
+  shellHook = ''
+    bun --version >.bun-version
+    node --version >.node-version
+  '';
 }
