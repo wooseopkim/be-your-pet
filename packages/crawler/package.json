@@ -10,8 +10,7 @@
   "name": "crawler",
   "private": "true",
   "scripts": {
-    "check": "tsc",
-    "test": "bun test"
+    "check": "tsc"
   },
   "type": "module",
   "version": "0.0.1"
