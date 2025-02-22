@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
 import AnimalList from "$lib/components/AnimalList.svelte";
 import pages from "$lib/store/animalPages";
 import "modern-normalize";
 import { onMount } from "svelte";
+import type { load } from "./+page.server.js";
 
-export let data;
+export let data: Awaited<ReturnType<typeof load>>;
 
 onMount(() => {
   pages.set([data.firstPage]);
