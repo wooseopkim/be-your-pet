@@ -1,5 +1,3 @@
-name: Run Supabase migrations
-
 on:
   push:
     branches:
