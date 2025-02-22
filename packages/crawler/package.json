@@ -13,8 +13,6 @@
   "private": "true",
   "scripts": {
     "check": "tsc",
-    "format": "eslint . --fix && prettier --write .",
-    "lint": "eslint . && prettier --check .",
     "test": "bun test"
   },
   "type": "module",
