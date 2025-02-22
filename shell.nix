@@ -7,6 +7,7 @@ mkShell {
     bun
     deno
     nodejs
+    act
     nil
     nixfmt-rfc-style
     shellcheck
