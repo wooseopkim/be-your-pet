@@ -18,7 +18,8 @@
   "private": true,
   "scripts": {
     "build": "bunx --bun vite build",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "codegen": "svelte-kit sync",
     "dev": "vite dev",
     "e2e": "npx playwright test",
     "preview": "vite preview"

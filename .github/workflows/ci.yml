@@ -21,11 +21,12 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
-      - run: scripts/bunrunws.sh build
+      - run: scripts/bunrunws.sh codegen
       - run: bun run format
       - run: bun run lint
       - run: scripts/bunrunws.sh check
       - run: bun test
+      - run: scripts/bunrunws.sh build
 
       - run: |
           browsers="$(.github/scripts/list_browsers.sh | sort | uniq)"
