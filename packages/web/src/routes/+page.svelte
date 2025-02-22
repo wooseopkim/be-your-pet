@@ -15,8 +15,8 @@ onMount(() => {
 	<AnimalList size={data.size} />
 </main>
 
-<link rel="stylesheet" href="$lib/assets/fonts/nanum-square-neo/style.css" />
-<link rel="stylesheet" href="$lib/assets/fonts/kcc-jeongbeom/style.css" />
+<link rel="stylesheet" href="$assets/fonts/kcc-jeongbeom/style.css" />
+<link rel="stylesheet" href="$assets/fonts/nanum-square-neo/style.css" />
 
 <style>
 	:root {

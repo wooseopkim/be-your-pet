@@ -4,6 +4,11 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [sveltekit()],
+  resolve: {
+    alias: {
+      $assets: `${import.meta.dir}/src/assets`,
+    },
+  },
   css: {
     postcss: {
       plugins: [postcssPresetEnv()],
