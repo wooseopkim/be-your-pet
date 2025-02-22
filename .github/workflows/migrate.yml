@@ -8,7 +8,7 @@ on:
 jobs:
   migrate:
     runs-on: ubuntu-latest
-    if: !vars.ACT
+    if: vars.ACT != 'true'
 
     env:
       SUPABASE_ACCES_TOKEN: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
