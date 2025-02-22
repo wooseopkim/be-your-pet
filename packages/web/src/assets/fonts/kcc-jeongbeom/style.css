@@ -2,5 +2,6 @@
   font-family: "KCC Jeongbeom";
   font-weight: normal;
   font-display: swap;
-  src: local("KCC-Jeongbeom"), url("./KCC-Jeongbeom.ttf") format("truetype");
+  src: local("KCC-Jeongbeom"),
+    url("$assets/fonts/kcc-jeongbeom/KCC-Jeongbeom.ttf") format("truetype");
 }

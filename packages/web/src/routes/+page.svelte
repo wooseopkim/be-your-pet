@@ -16,10 +16,10 @@ onMount(() => {
 	<AnimalList size={data.size} />
 </main>
 
-<link rel="stylesheet" href="$assets/fonts/kcc-jeongbeom/style.css" />
-<link rel="stylesheet" href="$assets/fonts/nanum-square-neo/style.css" />
-
 <style>
+    @import url("../assets/fonts/nanum-square-neo/style.css");
+    @import url("../assets/fonts/kcc-jeongbeom/style.css");
+
 	:root {
 		font-family: 'Nanum Square Neo', sans-serif;
 		font-size: 1.1rem;
