@@ -7,6 +7,10 @@
   },
   "name": "be-your-pet",
   "private": true,
+  "scripts": {
+    "format": "biome format",
+    "lint": "biome lint"
+  },
   "version": "0.0.1",
   "workspaces": ["packages/*"]
 }
