@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@actions/core": "^1.10.0",
     "@supabase/supabase-js": "^2.21.0",
     "@types/sinonjs__fake-timers": "^8.1.5"
   },
