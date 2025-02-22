@@ -1,7 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import { CustomError } from './CustomError';
 import { Paginator } from './Paginator';
-import { fetchAnimalList, type OpenApiResponse } from './public-api';
+import { fetchAnimalList, type OpenApiResponse } from './open_api';
 
 const jsonContentTypeHeader = /^application\/json(;.+)?/;
 
