@@ -5,8 +5,7 @@
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^14.0.0",
-    "@types/bun": "^1.2.2",
-    "@types/node": "^20.1.1"
+    "@types/bun": "^1.2.2"
   },
   "name": "crawler",
   "private": "true",
