@@ -1,16 +1,13 @@
 {
-	"name": "be-your-pet",
-	"version": "0.0.1",
-	"private": true,
 	"devDependencies": {
 		"modern-normalize": "^3.0.1",
 		"supabase": "^2.12.1",
 		"typescript": "^5.7.3"
 	},
+	"name": "be-your-pet",
+	"private": true,
+	"version": "0.0.1",
 	"workspaces": [
 		"packages/*"
-	],
-	"volta": {
-		"node": "20.13.1"
-	}
+	]
 }

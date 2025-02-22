@@ -1,10 +1,20 @@
 import { type PostgrestError, SupabaseClient } from '@supabase/supabase-js';
-import sampleResponse from '../tests/sample-response.json';
+import sampleResponse from '../test/sample-response.json';
 import handle from './handle';
-import { mock, type Mock } from 'node:test';
-import assert from 'node:assert';
+import {
+	afterEach,
+	beforeEach,
+	describe,
+	it,
+	mock,
+	spyOn,
+	type Mock,
+	expect,
+	jest,
+} from 'bun:test';
+import { Paginator } from './Paginator';
 
-describe(handle, () => {
+describe(handle.name, () => {
 	let supabase: SupabaseClient;
 
 	beforeEach(() => {
@@ -16,10 +26,20 @@ describe(handle, () => {
 				}),
 		} as unknown as SupabaseClient;
 		mockFetch(JSON.stringify(sampleResponse));
+
+		for (const method of [
+			'log',
+			'debug',
+			'info',
+			'warn',
+			'error',
+		] as const) {
+			spyOn(console, method).mockImplementation(jest.fn());
+		}
 	});
 
 	afterEach(() => {
-		mock.restoreAll();
+		mock.restore();
 	});
 
 	describe('calling public API', () => {
@@ -27,11 +47,10 @@ describe(handle, () => {
 			await handle(supabase, { open_api_service_key: 'foobar' });
 
 			const { calls } = (fetch as Mock<typeof fetch>).mock;
-			assert.equal(1, calls.length);
-			const url = calls[calls.length - 1].arguments[0];
-			assert.ok(url instanceof URL);
-			assert.equal(url.searchParams.get('pageNo'), '1');
-			assert.equal(url.searchParams.get('numOfRows'), '100');
+			expect(calls).toHaveLength(1);
+			const url = calls[calls.length - 1][0] as URL;
+			expect(url.searchParams.get('pageNo')).toBe('1');
+			expect(url.searchParams.get('numOfRows')).toBe('100');
 		});
 
 		it('passes given parameters', async () => {
@@ -42,11 +61,10 @@ describe(handle, () => {
 			});
 
 			const { calls } = (fetch as Mock<typeof fetch>).mock;
-			assert.equal(1, calls.length);
-			const url = calls[calls.length - 1].arguments[0];
-			assert.ok(url instanceof URL);
-			assert.equal(url.searchParams.get('pageNo'), '12');
-			assert.equal(url.searchParams.get('numOfRows'), '34');
+			expect(calls).toHaveLength(1);
+			const url = calls[calls.length - 1][0] as URL;
+			expect(url.searchParams.get('pageNo')).toBe('12');
+			expect(url.searchParams.get('numOfRows')).toBe('34');
 		});
 
 		it('limits size maximum', async () => {
@@ -56,10 +74,9 @@ describe(handle, () => {
 			});
 
 			const { calls } = (fetch as Mock<typeof fetch>).mock;
-			assert.equal(1, calls.length);
-			const url = calls[calls.length - 1].arguments[0];
-			assert.ok(url instanceof URL);
-			assert.equal(url.searchParams.get('numOfRows'), '1000');
+			expect(calls).toHaveLength(1);
+			const url = calls[calls.length - 1][0] as URL;
+			expect(url.searchParams.get('numOfRows')).toBe('1000');
 		});
 	});
 
@@ -75,10 +92,9 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			await assert.rejects(promise, (err) => {
-				assert.ok(err instanceof Object && 'message' in err);
-				assert.equal(err.message, 'Expected JSON but got non-JSON response');
-			});
+			expect(promise).toEqual(expect.rejectsTo.objectContaining({
+				message: 'Expected JSON but got non-JSON response',
+			}));
 		});
 
 		it('fails on bad response', async () => {
@@ -93,10 +109,9 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			await assert.rejects(promise, (err) => {
-				assert.ok(err instanceof Object && 'message' in err);
-				assert.equal(err.message, 'Expected success but got abnormal response');
-			});
+			expect(promise).toEqual(expect.rejectsTo.objectContaining({
+				message: 'Expected success but got abnormal response',
+			}));
 		});
 
 		it('fails on bad result code', async () => {
@@ -117,10 +132,9 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			await assert.rejects(promise, (err) => {
-				assert.ok(err instanceof Object && 'message' in err);
-				assert.equal(err.message, 'Expected success but got abnormal response');
-			});
+			expect(promise).toEqual(expect.rejectsTo.objectContaining({
+				message: 'Expected success but got abnormal response',
+			}));
 		});
 	});
 
@@ -130,10 +144,10 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			assert.deepStrictEqual(result?.next, {
+			expect(result?.next).toEqual(new Paginator({
 				page: 2,
 				size: 100,
-			});
+			}));
 		});
 
 		it('returns undefined when empty list is returned', async () => {
@@ -154,7 +168,7 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			assert.strictEqual(result, undefined);
+			expect(result).toBeUndefined();
 		});
 
 		it('fails when db error occurs', async () => {
@@ -170,10 +184,9 @@ describe(handle, () => {
 				open_api_service_key: 'foobar',
 			});
 
-			await assert.rejects(promise, (err) => {
-				assert.ok(err instanceof Object && 'message' in err);
-				assert.equal(err.message, 'Error inserting data into DB');
-			});
+			expect(promise).toEqual(expect.rejectsTo.objectContaining({
+				message: 'Error inserting data into DB',
+			}));
 		});
 	});
 });
@@ -186,7 +199,7 @@ function mockFetch(
 		},
 	}
 ) {
-	jest.spyOn(global, 'fetch').mockImplementation(() => {
+	spyOn(global, 'fetch').mockImplementation(() => {
 		return Promise.resolve(new Response(body, init));
 	});
 }
