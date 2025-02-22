@@ -7,7 +7,6 @@
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/kit": "^2.15.1",
     "@types/bun": "^1.2.2",
-    "postcss-preset-env": "^8.4.1",
     "svelte": "^5.16.0",
     "svelte-check": "^3.4.3",
     "tslib": "^2.4.1",
