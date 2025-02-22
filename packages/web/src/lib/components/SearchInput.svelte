@@ -1,7 +1,8 @@
 <script lang="ts">
 import { createEventDispatcher } from "svelte";
 
-const content = "";
+// biome-ignore lint/style/useConst: reassigned by Svelte
+let content = "";
 
 const dispatch = createEventDispatcher<{
   search: string;
