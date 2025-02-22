@@ -6,7 +6,7 @@ mkShell {
   packages = [
     bun
     deno
-    playwright-driver.browsers
+    nodejs
     nil
     nixfmt-rfc-style
     shellcheck
