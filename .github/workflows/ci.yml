@@ -21,9 +21,9 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
+      - run: bun --filter='*' --if-present run build
       - run: bun run format
       - run: bun run lint
-      - run: bun --filter='*' --if-present run build
       - run: bun --filter='*' --if-present run check
 
       - run: npx playwright install --with-deps
