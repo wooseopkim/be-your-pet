@@ -1,5 +1,5 @@
 import { type PostgrestError, SupabaseClient } from '@supabase/supabase-js';
-import sampleResponse from '../test/sample-response.json';
+import response from '../test/sample.json';
 import handle from './handle';
 import {
 	afterEach,
@@ -25,7 +25,7 @@ describe(handle.name, () => {
 					error: null,
 				}),
 		} as unknown as SupabaseClient;
-		mockFetch(JSON.stringify(sampleResponse));
+		mockFetch(JSON.stringify(response));
 
 		for (const method of [
 			'log',
@@ -98,7 +98,7 @@ describe(handle.name, () => {
 		});
 
 		it('fails on bad response', async () => {
-			mockFetch(JSON.stringify(sampleResponse), {
+			mockFetch(JSON.stringify(response), {
 				status: 500,
 				headers: {
 					'Content-Type': 'application/json',
@@ -117,11 +117,11 @@ describe(handle.name, () => {
 		it('fails on bad result code', async () => {
 			mockFetch(
 				JSON.stringify({
-					...sampleResponse,
+					...response,
 					response: {
-						...sampleResponse.response,
+						...response.response,
 						header: {
-							...sampleResponse.response.header,
+							...response.response.header,
 							resultCode: '44',
 						},
 					},
@@ -153,11 +153,11 @@ describe(handle.name, () => {
 		it('returns undefined when empty list is returned', async () => {
 			mockFetch(
 				JSON.stringify({
-					...sampleResponse,
+					...response,
 					response: {
-						...sampleResponse.response,
+						...response.response,
 						body: {
-							...sampleResponse.response.body,
+							...response.response.body,
 							items: [],
 						},
 					},
