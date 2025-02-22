@@ -22,9 +22,9 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "dev": "vite dev",
     "preview": "vite preview",
-    "test": "vitest run && playwright test",
-    "test:e2e": "playwright test",
-    "test:unit": "vitest run"
+    "test": "bun run test:unit && bun run test:e2e",
+    "test:e2e": "npx playwright test",
+    "test:unit": "npx vitest run"
   },
   "type": "module",
   "version": "0.0.1"
