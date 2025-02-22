@@ -1,5 +1,6 @@
 let
   pkgs = import <nixpkgs> { };
+  inherit (pkgs) lib;
 in
 with pkgs;
 mkShell {
@@ -15,9 +16,19 @@ mkShell {
   ];
 
   PLAYWRIGHT_BROWSERS_PATH = playwright-driver.browsers;
-  PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = true;
+  PLAYWRIGHT_HOST_PLATFORM_OVERRIDE = "nixos";
 
-  shellHook = ''
+  shellHook = let
+    playwrightPackage = x: "${x}@file:${playwright-test}/lib/node_modules/${x}";
+    playwrightPackages = builtins.map playwrightPackage [
+      "playwright"
+      "playwright-core"
+      "@playwright/test"
+    ];
+  in
+  ''
+    bun install --dev --no-save --exact \
+      ${lib.concatStringsSep " " playwrightPackages}
     bun --version >.bun-version
     node --version >.node-version
   '';
