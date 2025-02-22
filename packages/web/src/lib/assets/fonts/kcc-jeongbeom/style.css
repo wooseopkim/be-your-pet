@@ -1,8 +1,6 @@
 @font-face {
-	font-family: 'KCC Jeongbeom';
-	font-weight: normal;
-	font-display: swap;
-	src:
-		local('KCC-Jeongbeom'),
-		url('./KCC-Jeongbeom.ttf') format('truetype');
+  font-family: "KCC Jeongbeom";
+  font-weight: normal;
+  font-display: swap;
+  src: local("KCC-Jeongbeom"), url("./KCC-Jeongbeom.ttf") format("truetype");
 }

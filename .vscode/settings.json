@@ -1,17 +1,16 @@
 {
-	"[javascript][typescript]": {
-		"editor.codeActionsOnSave": {
-			"source.organizeImports": "never",
-			"source.sortImports": "never"
-		},
-		"editor.defaultFormatter": "vscode.typescript-language-features"
-	},
-	"deno.enable": false,
-	"deno.enablePaths": [
-		"./supabase"
-	],
-	"editor.codeActionsOnSave": {
-		"source": "explicit"
-	},
-	"editor.formatOnSave": true
+  "[javascript][typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never",
+      "source.sortImports": "never"
+    }
+  },
+  "biome.enabled": true,
+  "deno.enable": false,
+  "deno.enablePaths": ["./supabase"],
+  "editor.codeActionsOnSave": {
+    "source": "explicit"
+  },
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true
 }

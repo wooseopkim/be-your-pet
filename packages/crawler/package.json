@@ -1,22 +1,22 @@
 {
-	"dependencies": {
-		"@actions/core": "^1.10.0",
-		"@supabase/supabase-js": "^2.21.0",
-		"@types/sinonjs__fake-timers": "^8.1.5"
-	},
-	"devDependencies": {
-		"@sinonjs/fake-timers": "^14.0.0",
-		"@types/bun": "^1.2.2",
-		"@types/node": "^20.1.1"
-	},
-	"name": "crawler",
-	"private": "true",
-	"scripts": {
-		"check": "tsc",
-		"format": "eslint . --fix && prettier --write .",
-		"lint": "eslint . && prettier --check .",
-		"test": "bun test"
-	},
-	"type": "module",
-	"version": "0.0.1"
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@supabase/supabase-js": "^2.21.0",
+    "@types/sinonjs__fake-timers": "^8.1.5"
+  },
+  "devDependencies": {
+    "@sinonjs/fake-timers": "^14.0.0",
+    "@types/bun": "^1.2.2",
+    "@types/node": "^20.1.1"
+  },
+  "name": "crawler",
+  "private": "true",
+  "scripts": {
+    "check": "tsc",
+    "format": "eslint . --fix && prettier --write .",
+    "lint": "eslint . && prettier --check .",
+    "test": "bun test"
+  },
+  "type": "module",
+  "version": "0.0.1"
 }

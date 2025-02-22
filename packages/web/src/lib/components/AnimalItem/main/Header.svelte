@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { AnimalItem } from '$lib/models/AnimalItem';
+import type { AnimalItem } from "$lib/models/AnimalItem";
 
-	export let data: AnimalItem;
+export let data: AnimalItem;
 </script>
 
 <header>

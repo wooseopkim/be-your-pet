@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher } from "svelte";
 
-	let content = '';
+const content = "";
 
-	const dispatch = createEventDispatcher<{
-		search: string;
-	}>();
+const dispatch = createEventDispatcher<{
+  search: string;
+}>();
 
-	function onChange(e: KeyboardEvent) {
-		const target = e.target as HTMLInputElement | null;
-		dispatch('search', target?.value ?? '');
-	}
+function onChange(e: KeyboardEvent) {
+  const target = e.target as HTMLInputElement | null;
+  dispatch("search", target?.value ?? "");
+}
 </script>
 
 <input

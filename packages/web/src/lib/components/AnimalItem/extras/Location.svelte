@@ -1,15 +1,15 @@
 <script lang="ts">
-	import ExtraCard from './ExtraCard.svelte';
-	import cyrb53a from '$lib/cyrb53a';
-	import type { AnimalItem } from '$lib/models/AnimalItem';
+import cyrb53a from "$lib/cyrb53a";
+import type { AnimalItem } from "$lib/models/AnimalItem";
+import ExtraCard from "./ExtraCard.svelte";
 
-	export let data: AnimalItem;
-	let address: string;
-	let id: number;
-	$: {
-		address = data.source.careAddr;
-		id = data.id + cyrb53a(address);
-	}
+export let data: AnimalItem;
+let address: string;
+let id: number;
+$: {
+  address = data.source.careAddr;
+  id = data.id + cyrb53a(address);
+}
 </script>
 
 <ExtraCard {id} slideInFrom={['left', 'down']}>

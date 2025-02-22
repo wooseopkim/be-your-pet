@@ -1,12 +1,12 @@
 {
-	"compilerOptions": {
-		"esModuleInterop": true,
-		"isolatedModules": true,
-		"module": "NodeNext",
-		"moduleResolution": "nodenext",
-		"moduleDetection": "force",
-		"strict": true,
-		"target": "esnext",
-		"verbatimModuleSyntax": true
-	}
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "module": "NodeNext",
+    "moduleDetection": "force",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "target": "esnext",
+    "verbatimModuleSyntax": true
+  }
 }

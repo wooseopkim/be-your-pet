@@ -1,21 +1,21 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import Item from '../AnimalItem.svelte';
-	import { AnimalItem } from '$lib/models/AnimalItem';
-	import type { AnimalRecord } from '$lib/db/AnimalRecord';
-	import addIntersectionListener from '$lib/dom/listeners';
+import type { AnimalRecord } from "$lib/db/AnimalRecord";
+import addIntersectionListener from "$lib/dom/listeners";
+import { AnimalItem } from "$lib/models/AnimalItem";
+import { createEventDispatcher } from "svelte";
+import Item from "../AnimalItem.svelte";
 
-	export let content: AnimalRecord[];
+export let content: AnimalRecord[];
 
-	const dispatch = createEventDispatcher<{
-		loadrequest: AnimalRecord | null;
-	}>();
+const dispatch = createEventDispatcher<{
+  loadrequest: AnimalRecord | null;
+}>();
 
-	let lastElement: HTMLElement;
-	$: addIntersectionListener(lastElement, (observer) => {
-		dispatch('loadrequest', content[content.length - 1]);
-		observer.unobserve(lastElement);
-	});
+let lastElement: HTMLElement;
+$: addIntersectionListener(lastElement, (observer) => {
+  dispatch("loadrequest", content[content.length - 1]);
+  observer.unobserve(lastElement);
+});
 </script>
 
 {#each content as { body }, i}

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { AnimalItem } from '$lib/models/AnimalItem';
-	import { format } from '$lib/ui/date';
+import type { AnimalItem } from "$lib/models/AnimalItem";
+import { format } from "$lib/ui/date";
 
-	export let data: AnimalItem;
+export let data: AnimalItem;
 </script>
 
 <section>

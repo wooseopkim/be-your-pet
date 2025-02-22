@@ -1,9 +1,9 @@
 {
-	"compilerOptions": {
-		"module": "ESNext",
-		"moduleResolution": "Bundler",
-		"noEmit": true,
-		"resolveJsonModule": true
-	},
-	"extends": "../../tsconfig.json"
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "resolveJsonModule": true
+  },
+  "extends": "../../tsconfig.json"
 }

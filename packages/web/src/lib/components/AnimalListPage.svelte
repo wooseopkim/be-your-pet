@@ -1,22 +1,22 @@
 <script lang="ts">
-	import type { PostgrestError } from '@supabase/supabase-js';
-	import Error from './AnimalListPage/Error.svelte';
-	import List from './AnimalListPage/List.svelte';
-	import Loading from './AnimalListPage/Loading.svelte';
-	import type { AnimalPage } from '$lib/store/animalPages';
-	import type { AnimalRecord } from '$lib/db/AnimalRecord';
+import type { AnimalRecord } from "$lib/db/AnimalRecord";
+import type { AnimalPage } from "$lib/store/animalPages";
+import type { PostgrestError } from "@supabase/supabase-js";
+import Error_ from "./AnimalListPage/Error.svelte";
+import List from "./AnimalListPage/List.svelte";
+import Loading from "./AnimalListPage/Loading.svelte";
 
-	export let data: AnimalPage;
-	export let error: PostgrestError | null = null;
-	let content: AnimalRecord[];
+export let data: AnimalPage;
+export const error: PostgrestError | null = null;
+let content: AnimalRecord[];
 
-	$: if (!data.loading && !error) {
-		content = data.content ?? [];
-	}
+$: if (!data.loading && !error) {
+  content = data.content ?? [];
+}
 </script>
 
 {#if error}
-	<Error value={error} />
+	<Error_ value={error} />
 {:else if data.loading}
 	<Loading />
 {:else}

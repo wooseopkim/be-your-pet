@@ -1,8 +1,8 @@
 export class CustomError extends Error {
-	readonly message: string;
+  readonly message: string;
 
-	constructor(message: string) {
-		super(message);
-		this.message = message;
-	}
+  constructor(message: string) {
+    super(message);
+    this.message = message;
+  }
 }

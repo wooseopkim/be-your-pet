@@ -1,16 +1,16 @@
 <script>
-	import '$lib/assets/fonts/kcc-jeongbeom/style.css';
-	import '$lib/assets/fonts/nanum-square-neo/style.css';
-	import 'modern-normalize';
-	import { onMount } from 'svelte';
-	import AnimalList from '$lib/components/AnimalList.svelte';
-	import pages from '$lib/store/animalPages';
+import "$lib/assets/fonts/kcc-jeongbeom/style.css";
+import "$lib/assets/fonts/nanum-square-neo/style.css";
+import "modern-normalize";
+import AnimalList from "$lib/components/AnimalList.svelte";
+import pages from "$lib/store/animalPages";
+import { onMount } from "svelte";
 
-	export let data;
+export let data;
 
-	onMount(() => {
-		pages.set([data.firstPage]);
-	});
+onMount(() => {
+  pages.set([data.firstPage]);
+});
 </script>
 
 <main style:background-color={data.backgroundColor}>
