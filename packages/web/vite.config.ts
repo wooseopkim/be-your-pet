@@ -1,13 +1,13 @@
 import { sveltekit } from "@sveltejs/kit/vite";
 import postcssPresetEnv from "postcss-preset-env";
 import { defineConfig } from "vite";
-import * as path from "node:path";
+import { resolve } from "node:path";
 
 export default defineConfig({
   plugins: [sveltekit()],
   resolve: {
     alias: {
-      $assets: path.resolve("src", "assets"),
+      $assets: resolve("src", "assets"),
     },
   },
   css: {
