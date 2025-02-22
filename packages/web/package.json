@@ -18,7 +18,7 @@
   "name": "web",
   "private": true,
   "scripts": {
-    "build": "vite build",
+    "build": "bunx --bun vite build",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "dev": "vite dev",
     "e2e": "npx playwright test",

@@ -12,5 +12,8 @@
     "lint": "biome lint"
   },
   "version": "0.0.1",
-  "workspaces": ["packages/*"]
+  "workspaces": ["packages/*"],
+  "dependencies": {
+    "punycode": "^2.3.1"
+  }
 }
