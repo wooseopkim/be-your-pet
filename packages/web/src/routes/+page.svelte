@@ -1,9 +1,7 @@
 <script>
-import "$lib/assets/fonts/kcc-jeongbeom/style.css";
-import "$lib/assets/fonts/nanum-square-neo/style.css";
-import "modern-normalize";
 import AnimalList from "$lib/components/AnimalList.svelte";
 import pages from "$lib/store/animalPages";
+import "modern-normalize";
 import { onMount } from "svelte";
 
 export let data;
@@ -16,6 +14,9 @@ onMount(() => {
 <main style:background-color={data.backgroundColor}>
 	<AnimalList size={data.size} />
 </main>
+
+<link rel="stylesheet" href="$lib/assets/fonts/nanum-square-neo/style.css" />
+<link rel="stylesheet" href="$lib/assets/fonts/kcc-jeongbeom/style.css" />
 
 <style>
 	:root {
