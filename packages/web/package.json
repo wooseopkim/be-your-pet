@@ -17,7 +17,7 @@
   "name": "web",
   "private": true,
   "scripts": {
-    "build": "bunx --bun vite build",
+    "build": "vite build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "codegen": "svelte-kit sync",
     "dev": "vite dev",
