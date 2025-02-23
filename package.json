@@ -10,7 +10,7 @@
   "scripts": {
     "format": "biome format",
     "lint": "biome lint",
-    "ws": "bun --filter='*' --elide-lines=0 run"
+    "ws": "bun --filter='*' run"
   },
   "version": "0.0.1",
   "workspaces": ["packages/*"]
