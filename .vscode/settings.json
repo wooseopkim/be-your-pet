@@ -5,6 +5,9 @@
       "source.sortImports": "never"
     }
   },
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
+  },
   "biome.enabled": true,
   "deno.enable": false,
   "deno.enablePaths": ["./supabase"],
@@ -12,5 +15,6 @@
     "source": "explicit"
   },
   "editor.defaultFormatter": "biomejs.biome",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "nix.enableLanguageServer": true
 }
