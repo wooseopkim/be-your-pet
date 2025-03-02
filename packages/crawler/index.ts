@@ -4,14 +4,19 @@ import handle, { type Request } from "./src/handle";
 export default async function crawl(
   supabase: SupabaseClient,
   request?: Request,
+  results: object[] = [],
 ) {
   const result = await handle(supabase, request);
   if (result === undefined) {
-    return;
+    return results;
   }
-  await crawl(supabase, {
-    page: result.next.page,
-    size: result.next.size,
-    totalCount: result.totalCount,
-  });
+  return await crawl(
+    supabase,
+    {
+      page: result.next.page,
+      size: result.next.size,
+      totalCount: result.totalCount,
+    },
+    [...results, result],
+  );
 }

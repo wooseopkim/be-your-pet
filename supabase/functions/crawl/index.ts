@@ -1,17 +1,20 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import crawl from "@be-your-pet/crawler";
 
 Deno.serve(async (req) => {
-  const supbase = createClient(
-    Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
-  );
+  const token = req.headers.get("Authorization")?.replace(/^Bearer /, "") ?? "";
+  const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (token !== key) {
+    return new Response(null, { status: 404 });
+  }
 
-  const authorization = req.headers.get("Authorization");
-  const token = authorization?.replace("Bearer ", "");
-  const { data } = await supbase.auth.getUser(token);
+  const url = Deno.env.get("SUPABASE_URL") ?? "";
+  const supabase = createClient(url, key);
 
-  return new Response(JSON.stringify({ data }), {
+  const result = await crawl(supabase);
+
+  return new Response(JSON.stringify(result), {
     headers: { "Content-Type": "application/json" },
     status: 200,
   });

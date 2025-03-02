@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "@be-your-pet/crawler": "../../../packages/crawler/index.ts"
+  }
+}
