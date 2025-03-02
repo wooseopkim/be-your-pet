@@ -28,7 +28,5 @@ jobs:
       - run: bun test
       - run: bun run ws build
 
-      - run: |
-          browsers="$(.github/scripts/list_browsers.sh | sort | uniq)"
-          npx playwright install $browsers --with-deps
+      - run: npx playwright install --with-deps
       - run: bun run ws e2e
