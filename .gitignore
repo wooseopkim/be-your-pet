@@ -173,3 +173,5 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/node,deno,visualstudiocode
 
 test-results/
+
+/packages/web/build/
