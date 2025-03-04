@@ -4,6 +4,7 @@ on:
       - main
     paths:
       - 'supabase/migrations/*.sql'
+  workflow_dispatch:
 
 jobs:
   migrate:
