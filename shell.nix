@@ -13,6 +13,7 @@ mkShell {
     nixfmt-rfc-style
     shellcheck
     shfmt
+    sqlfluff
   ];
 
   PLAYWRIGHT_BROWSERS_PATH = playwright-driver.browsers;

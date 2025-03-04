@@ -1,8 +1,8 @@
 select
-  cron.schedule(
-    'crawl',
-    '6 hours',
-    $$
+    cron.schedule(
+        'crawl',
+        '6 hours',
+        $$
     select
       net.http_post(
           url:='https://vrpyodyxhlbljkedyeoy.supabase.co/functions/v1/crawl?open_api_service_key=' || (select decrypted_secret from vault.decrypted_secrets where name = 'open_api_service_key'),
@@ -14,4 +14,4 @@ select
           timeout_milliseconds:=30000
       ) as request_id;
     $$
-  );
+    );

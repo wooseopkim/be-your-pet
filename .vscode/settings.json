@@ -8,6 +8,9 @@
   "[nix]": {
     "editor.defaultFormatter": "jnoortheen.nix-ide"
   },
+  "[sql]": {
+    "editor.defaultFormatter": "dorzey.vscode-sqlfluff"
+  },
   "biome.enabled": true,
   "deno.enable": false,
   "deno.enablePaths": ["./supabase"],

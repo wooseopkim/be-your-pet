@@ -1,7 +1,7 @@
-DROP FUNCTION search_animals (TEXT);
+DROP FUNCTION search_animals(TEXT);
 
 CREATE
-OR REPLACE FUNCTION search_animals (queries TEXT[]) RETURNS SETOF animals AS $$
+OR REPLACE FUNCTION search_animals(queries TEXT []) RETURNS SETOF ANIMALS AS $$
 DECLARE
     stmt TEXT;
 BEGIN
