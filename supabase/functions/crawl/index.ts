@@ -9,10 +9,15 @@ Deno.serve(async (req) => {
     return new Response(null, { status: 404 });
   }
 
+  const queries = new URL(req.url).searchParams;
+  const openApiServiceKey = queries.get("open_api_service_key");
+
   const url = Deno.env.get("SUPABASE_URL") ?? "";
   const supabase = createClient(url, key);
 
-  const result = await crawl(supabase);
+  const result = await crawl(supabase, {
+    openApiServiceKey,
+  });
 
   return new Response(JSON.stringify(result), {
     headers: { "Content-Type": "application/json" },
