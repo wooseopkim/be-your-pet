@@ -3,7 +3,7 @@ import handle, { type Request } from "./src/handle";
 
 export default async function crawl(
   supabase: SupabaseClient,
-  request?: Request,
+  request: Request,
   results: object[] = [],
 ) {
   const result = await handle(supabase, request);
@@ -16,6 +16,7 @@ export default async function crawl(
       page: result.next.page,
       size: result.next.size,
       totalCount: result.totalCount,
+      openApiServiceKey: request.openApiServiceKey,
     },
     [...results, result],
   );

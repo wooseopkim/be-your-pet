@@ -38,7 +38,7 @@ describe(handle.name, () => {
 
   describe("calling public API", () => {
     it("passes default page parameters", async () => {
-      await handle(supabase, { open_api_service_key: "foobar" });
+      await handle(supabase, { openApiServiceKey: "foobar" });
 
       const { calls } = (fetch as Mock<typeof fetch>).mock;
       expect(calls).toHaveLength(1);
@@ -49,7 +49,7 @@ describe(handle.name, () => {
 
     it("passes given parameters", async () => {
       await handle(supabase, {
-        open_api_service_key: "foobar",
+        openApiServiceKey: "foobar",
         page: 12,
         size: 34,
       });
@@ -63,7 +63,7 @@ describe(handle.name, () => {
 
     it("limits size maximum", async () => {
       await handle(supabase, {
-        open_api_service_key: "foobar",
+        openApiServiceKey: "foobar",
         size: 20230513,
       });
 
@@ -83,7 +83,7 @@ describe(handle.name, () => {
       });
 
       const promise = handle(supabase, {
-        open_api_service_key: "foobar",
+        openApiServiceKey: "foobar",
       });
 
       expect(promise).toEqual(
@@ -102,7 +102,7 @@ describe(handle.name, () => {
       });
 
       const promise = handle(supabase, {
-        open_api_service_key: "foobar",
+        openApiServiceKey: "foobar",
       });
 
       expect(promise).toEqual(
@@ -127,7 +127,7 @@ describe(handle.name, () => {
       );
 
       const promise = handle(supabase, {
-        open_api_service_key: "foobar",
+        openApiServiceKey: "foobar",
       });
 
       expect(promise).toEqual(
@@ -141,7 +141,7 @@ describe(handle.name, () => {
   describe("handling Supabase response", () => {
     it("returns paginator for next page", async () => {
       const result = await handle(supabase, {
-        open_api_service_key: "foobar",
+        openApiServiceKey: "foobar",
       });
 
       expect(result?.next).toEqual(
@@ -167,7 +167,7 @@ describe(handle.name, () => {
       );
 
       const result = await handle(supabase, {
-        open_api_service_key: "foobar",
+        openApiServiceKey: "foobar",
       });
 
       expect(result).toBeUndefined();
@@ -183,7 +183,7 @@ describe(handle.name, () => {
       } as unknown as SupabaseClient;
 
       const promise = handle(supabase, {
-        open_api_service_key: "foobar",
+        openApiServiceKey: "foobar",
       });
 
       expect(promise).toEqual(

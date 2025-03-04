@@ -7,18 +7,15 @@ const jsonContentTypeHeader = /^application\/json(;.+)?/;
 
 export type Request = Partial<Paginator> & {
   totalCount?: number;
-  open_api_service_key?: string;
+  openApiServiceKey: string;
 };
 
 export default async function handle(
   supabase: SupabaseClient,
-  request?: Request,
+  request: Request,
 ) {
   const paginator = new Paginator(request);
-  const openApiServiceKey = request?.open_api_service_key;
-  if (openApiServiceKey === undefined) {
-    throw new CustomError("API key not provided");
-  }
+  const { openApiServiceKey } = request;
   const animalListResponse = await fetchAnimalList(
     openApiServiceKey,
     paginator,
