@@ -31,8 +31,17 @@ jobs:
           bun-version-file: .bun-version
       - run: npx playwright install --with-deps
       - run: bun run ws e2e
+  deno:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version-file: .dvmrc
+      - run: deno lint supabase/functions/
+      - run: deno compile supabase/functions/*/index.ts
   functions:
-    needs: [check]
+    needs: [check, deno]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
