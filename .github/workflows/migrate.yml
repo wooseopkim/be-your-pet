@@ -4,6 +4,7 @@ on:
       - main
     paths:
       - 'supabase/migrations/*.sql'
+      - '.github/workflows/migrate.yml'
   workflow_dispatch:
 
 env:
