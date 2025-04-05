@@ -36,4 +36,7 @@ jobs:
         env:
           SUPABASE_DB_PASSWORD : ${{ secrets.SUPABASE_DB_PASSWORD }}
       - if: env.ACT != 'true'
-        run: supabase migration up --linked --include-all <<<"${SUPABASE_DB_PASSWORD}"
+        run: |
+          urlencode='python -c "import urllib, sys; print urllib.quote(sys.argv[1])"'
+          password="$("${urlencode}" "${SUPABASE_DB_PASSWORD}")"
+          supabase migration up --linked --include-all <<<"${password}"
