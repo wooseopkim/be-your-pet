@@ -12,6 +12,18 @@ Deno.serve(async (req) => {
   const queries = new URL(req.url).searchParams;
   const openApiServiceKey = queries.get("open_api_service_key");
 
+  if (openApiServiceKey === null) {
+    return new Response(
+      JSON.stringify({
+        message: "Open API service key not provided",
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+        status: 400,
+      },
+    );
+  }
+
   const url = Deno.env.get("SUPABASE_URL") ?? "";
   const supabase = createClient(url, key);
 
