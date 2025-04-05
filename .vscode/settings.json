@@ -15,7 +15,8 @@
   "deno.enable": false,
   "deno.enablePaths": ["./supabase"],
   "editor.codeActionsOnSave": {
-    "source": "explicit"
+    "source": "explicit",
+    "source.sort.json": "never"
   },
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
