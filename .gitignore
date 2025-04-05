@@ -175,3 +175,5 @@ dist
 test-results/
 
 /packages/web/build/
+
+/.secrets
