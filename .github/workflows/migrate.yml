@@ -36,5 +36,6 @@ jobs:
         env:
           SUPABASE_DB_PASSWORD : ${{ secrets.SUPABASE_DB_PASSWORD }}
       - if: env.ACT != 'true'
-        run: |
-          supabase migration up --linked --include-all <<<"${SUPABASE_DB_PASSWORD}"
+        run: supabase migration up --linked --include-all <<<"${SUPABASE_DB_PASSWORD}"
+        env:
+          SUPABASE_DB_PASSWORD : ${{ secrets.SUPABASE_DB_PASSWORD }}
