@@ -1,5 +1,5 @@
-import type { Paginator } from "./Paginator";
-import retry from "./retry";
+import type { Paginator } from "./Paginator.ts";
+import retry from "./retry.ts";
 
 export type OpenApiResponse = {
   response:

@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import handle, { type Request } from "./src/handle";
+import handle, { type Request } from "./src/handle.ts";
 
 export default async function crawl(
   supabase: SupabaseClient,

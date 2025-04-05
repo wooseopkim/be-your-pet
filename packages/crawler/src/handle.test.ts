@@ -11,8 +11,8 @@ import {
 } from "bun:test";
 import type { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 import response from "../test/sample.json";
-import { Paginator } from "./Paginator";
-import handle from "./handle";
+import { Paginator } from "./Paginator.ts";
+import handle from "./handle.ts";
 
 describe(handle.name, () => {
   let supabase: SupabaseClient;

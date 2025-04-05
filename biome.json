@@ -15,5 +15,17 @@
     "clientKind": "git",
     "enabled": true,
     "useIgnoreFile": true
-  }
+  },
+  "overrides": [
+    {
+      "include": ["packages/crawler/**"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useImportExtensions": "error"
+          }
+        }
+      }
+    }
+  ]
 }

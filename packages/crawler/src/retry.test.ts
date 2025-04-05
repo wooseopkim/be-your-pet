@@ -8,7 +8,7 @@ import {
   setDefaultTimeout,
 } from "bun:test";
 import fakeTimers, { type InstalledClock } from "@sinonjs/fake-timers";
-import retry from "./retry";
+import retry from "./retry.ts";
 
 setDefaultTimeout(1000);
 
