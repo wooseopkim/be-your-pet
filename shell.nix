@@ -33,6 +33,7 @@ mkShell {
         ${lib.concatStringsSep " " playwrightPackages}
       bun --version >.bun-version
       node --version >.node-version
+      echo '${sqlfluff.version}' >.sqlfluff-version
       deno eval 'console.log(Deno.version.deno)' >.dvmrc
     '';
 }
