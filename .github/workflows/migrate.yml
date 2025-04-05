@@ -20,6 +20,8 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install sqlfluff=="$(cat .sqlfluff-version)"
+        env:
+          PIP_ROOT_USER_ACTION: ignore
       - run: sqlfluff lint .
 
       - uses: supabase/setup-cli@v1
