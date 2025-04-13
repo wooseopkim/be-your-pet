@@ -2,6 +2,7 @@
   "imports": {
     "@be-your-pet/crawler": "../../../packages/crawler/index.ts",
     "@supabase/functions-js/edge-runtime.d.ts": "jsr:@supabase/functions-js@^2.4.4/edge-runtime.d.ts",
-    "@supabase/supabase-js": "jsr:@supabase/supabase-js@^2.49.1"
+    "@supabase/supabase-js": "jsr:@supabase/supabase-js@^2.49.1",
+    "../../..": "../../.."
   }
 }
