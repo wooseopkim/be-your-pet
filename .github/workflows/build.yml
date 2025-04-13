@@ -34,6 +34,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
+      - run: bun install --frozen-lockfile
       - run: npx playwright install --with-deps
       - run: bun run ws e2e
   deno:
