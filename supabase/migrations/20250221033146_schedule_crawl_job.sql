@@ -1,7 +1,7 @@
 select
     cron.schedule(
         'crawl',
-        '* 6 * * *',
+        '0 */6 * * *',
         $$
     select
       net.http_post(
