@@ -21,7 +21,12 @@ jobs:
       - run: bun run lint
       - run: bun run ws check
       - run: bun test
-      - run: bun run ws build
+      - run: bun --filter=web --env-file=.env run build
+        env:
+          BASE_PATH: '/${{ github.event.repository.name }}'
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/web/build/
   e2e:
     runs-on: ubuntu-latest
     steps:
@@ -40,6 +45,19 @@ jobs:
           deno-version-file: .dvmrc
       - run: deno lint supabase/functions/
       - run: deno compile supabase/functions/*/index.ts
+  pages:
+    needs: [check, e2e]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
   functions:
     needs: [check, deno]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
