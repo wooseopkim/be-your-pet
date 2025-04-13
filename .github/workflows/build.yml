@@ -22,8 +22,6 @@ jobs:
       - run: bun run ws check
       - run: bun test
       - run: bun --filter=web --env-file=.env run build
-        env:
-          BASE_PATH: '/${{ github.event.repository.name }}'
       - uses: actions/upload-pages-artifact@v3
         with:
           path: packages/web/build/
