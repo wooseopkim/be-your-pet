@@ -2,17 +2,19 @@
 import type { AnimalRecord } from "$lib/db/AnimalRecord";
 import { loadAnimalPage } from "$lib/db/animals";
 import pages from "$lib/store/animalPages";
-import { onDestroy } from "svelte";
+import { onDestroy, onMount } from "svelte";
 import AnimalListPage from "./AnimalListPage.svelte";
 import SearchInput from "./SearchInput.svelte";
 
 export let size: number;
 export let query: string | undefined = undefined;
 
+onMount(() => onLoadRequest(undefined));
+
 function onLoadRequest(data: AnimalRecord | undefined) {
   const oldPages = $pages;
   const lastPage = oldPages[oldPages.length - 1];
-  if (lastPage.loading) {
+  if (lastPage?.loading) {
     return;
   }
   const id =

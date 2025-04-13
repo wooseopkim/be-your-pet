@@ -1,19 +1,19 @@
 <script lang="ts">
 import AnimalList from "$lib/components/AnimalList.svelte";
-import pages from "$lib/store/animalPages";
+import { Random } from "$lib/ui/random";
 import "modern-normalize";
-import { onMount } from "svelte";
-import type { load } from "./+page.server.js";
 
-export let data: Awaited<ReturnType<typeof load>>;
-
-onMount(() => {
-  pages.set([data.firstPage]);
+const MINUTE_IN_MILLIS = 1000 * 60;
+const seed = Math.floor(Date.now() / MINUTE_IN_MILLIS);
+const random = new Random(seed);
+const backgroundColor = random.rgb({
+  base: 216,
+  diff: 32,
 });
 </script>
 
-<main style:background-color={data.backgroundColor}>
-	<AnimalList size={data.size} />
+<main style:background-color={backgroundColor}>
+	<AnimalList size={5} />
 </main>
 
 <style>
