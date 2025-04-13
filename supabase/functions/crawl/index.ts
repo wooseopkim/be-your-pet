@@ -9,8 +9,8 @@ Deno.serve(async (req) => {
     return new Response(null, { status: 404 });
   }
 
-  const queries = new URL(req.url).searchParams;
-  const openApiServiceKey = queries.get("open_api_service_key");
+  const body = await req.json();
+  const openApiServiceKey = body.open_api_service_key;
 
   if (openApiServiceKey === null) {
     return new Response(
