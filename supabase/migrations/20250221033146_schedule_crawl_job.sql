@@ -11,7 +11,7 @@ select
             'Authorization', 'Bearer ' || (select decrypted_secret from vault.decrypted_secrets where name = 'supabase_cron_api_key')
           ),
           body:=jsonb_build_object('time', now(), 'open_api_service_key', (select decrypted_secret from vault.decrypted_secrets where name = 'open_api_service_key')),
-          timeout_milliseconds:=30000
+          timeout_milliseconds:=5000
       ) as request_id;
     $$
     );
