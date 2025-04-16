@@ -16,6 +16,11 @@ export default async function handle(
 ) {
   const paginator = new Paginator(request);
   const { openApiServiceKey } = request;
+
+  if (!openApiServiceKey) {
+    throw new CustomError("no open API service key provided");
+  }
+
   const animalListResponse = await fetchAnimalList(
     openApiServiceKey,
     paginator,
