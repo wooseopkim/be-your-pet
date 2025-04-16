@@ -20,6 +20,7 @@ export default async function handle(
   if (!openApiServiceKey) {
     throw new CustomError("no open API service key provided");
   }
+  console.info({ openApiServiceKey });
 
   const animalListResponse = await fetchAnimalList(
     openApiServiceKey,
