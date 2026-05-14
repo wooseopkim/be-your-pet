@@ -4,7 +4,7 @@ import handle, { type Request } from "./src/handle.ts";
 export default async function crawl(
   supabase: SupabaseClient,
   request: Request,
-  results: object[] = [],
+  results: object[],
 ) {
   const result = await handle(supabase, request);
   if (result === undefined) {
