@@ -1,7 +1,12 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { CustomError } from "./CustomError.ts";
 import { Paginator } from "./Paginator.ts";
 import { type OpenApiResponse, fetchAnimalList } from "./open_api.ts";
+import {
+  DatabaseInsertError,
+  MalformedApiResponseError,
+  NoOpenApiServiceKeyProvidedError,
+  UnsuccessfulApiResponseError,
+} from "./errors.ts";
 
 const jsonContentTypeHeader = /^application\/json(;.+)?/;
 
@@ -18,7 +23,7 @@ export default async function handle(
   const { openApiServiceKey } = request;
 
   if (!openApiServiceKey) {
-    throw new CustomError("no open API service key provided");
+    throw new NoOpenApiServiceKeyProvidedError();
   }
   console.info({ openApiServiceKey });
 
@@ -31,16 +36,17 @@ export default async function handle(
   const contentType = headers.get("Content-Type") ?? "";
 
   if (!jsonContentTypeHeader.test(contentType)) {
+    const text = await animalListResponse.text();
     console.error(
       "wrong content type",
       JSON.stringify({
         status,
         headers,
         contentType,
-        text: await animalListResponse.text(),
+        text,
       }),
     );
-    throw new CustomError("Expected JSON but got non-JSON response");
+    throw new MalformedApiResponseError(text);
   }
 
   const animalListBody: OpenApiResponse = await animalListResponse.json();
@@ -54,7 +60,10 @@ export default async function handle(
         request,
       }),
     );
-    throw new CustomError("Expected success but got abnormal response");
+    throw new UnsuccessfulApiResponseError(
+      status,
+      JSON.stringify(animalListBody),
+    );
   }
 
   const apiList =
@@ -108,7 +117,7 @@ export default async function handle(
         upsertedCount,
       }),
     );
-    throw new CustomError("Error inserting data into DB");
+    throw new DatabaseInsertError(error);
   }
 
   console.debug(
